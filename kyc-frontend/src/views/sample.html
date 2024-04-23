@@ -1,0 +1,264 @@
+<template>
+  <div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-400 to-pink-500 dark:from-gray-800 dark:to-gray-900">
+    <div class="rounded-lg shadow-lg dark:border dark:border-gray-700 p-8 absolute top-8 left-8 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg dark:border dark:border-gray-700 w-full max-w-xl p-10">
+      <h2 class="text-4xl font-semibold text-gray-900 dark:text-white mb-8 text-center">Upload your documents here!</h2>
+      <div
+        class="border-4 border-dashed border-gray-400 p-8 mb-8 bg-gray-100 rounded-lg text-center relative overflow-hidden"
+        @dragover.prevent="dragOver"
+        @dragleave.prevent="dragLeave"
+        @drop.prevent="dropImage"
+        :class="{ 'border-blue-500 border-opacity-50': isDragOver }"
+      >
+        <input
+          id="imageInput"
+          type="file"
+          class="hidden"
+          @change="handleFileSelect"
+        >
+        <label for="imageInput" class="absolute inset-0 flex flex-col justify-center items-center w-full h-full cursor-pointer">
+          <span class="text-lg text-gray-600 dark:text-black mb-4">Drag & Drop your document here</span>
+          <span class="text-blue-500 dark:text-blue-300 font-semibold hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">or Click to Select</span>
+        </label>
+        <img
+          v-if="selectedFile"
+          :src="imageSrc"
+          alt="Selected Image"
+          class="mt-6 max-w-full rounded opacity-75 hover:opacity-100 transition duration-300"
+        />
+      </div>
+      <button
+        @click="uploadImage"
+        :disabled="!selectedFile"
+        class="bg-green-500 text-white py-3 px-8 rounded-lg hover:bg-green-600 transition duration-300 disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed w-full focus:outline-none"
+      >
+        Upload
+      </button>
+      <p v-if="uploadStatus" class="mt-6 text-green-500">{{ uploadStatus }}</p>
+    </div>
+    
+    <div class="rounded-lg shadow-lg dark:border dark:border-gray-700 p-8 absolute top-8 right-8 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg dark:border dark:border-gray-700 w-full max-w-xl p-10">
+      <h2 class="text-4xl font-semibold text-gray-900 dark:text-white mb-8 text-center">Upload your documents here!</h2>
+      <div
+        class="border-4 border-dashed border-gray-400 p-8 mb-8 bg-gray-100 rounded-lg text-center relative overflow-hidden"
+        @dragover.prevent="dragOver"
+        @dragleave.prevent="dragLeave"
+        @drop.prevent="dropImage"
+        :class="{ 'border-blue-500 border-opacity-50': isDragOver }"
+      >
+        <input
+          id="imageInput"
+          type="file"
+          class="hidden"
+          @change="handleFileSelect"
+        >
+        <label for="imageInput" class="absolute inset-0 flex flex-col justify-center items-center w-full h-full cursor-pointer">
+          <span class="text-lg text-gray-600 dark:text-black mb-4">Drag & Drop your document here</span>
+          <span class="text-blue-500 dark:text-blue-300 font-semibold hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">or Click to Select</span>
+        </label>
+        <img
+          v-if="selectedFile"
+          :src="imageSrc"
+          alt="Selected Image"
+          class="mt-6 max-w-full rounded opacity-75 hover:opacity-100 transition duration-300"
+        />
+      </div>
+      <button
+        @click="uploadImage"
+        :disabled="!selectedFile"
+        class="bg-green-500 text-white py-3 px-8 rounded-lg hover:bg-green-600 transition duration-300 disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed w-full focus:outline-none"
+      >
+        Upload
+      </button>
+      <p v-if="uploadStatus" class="mt-6 text-green-500">{{ uploadStatus }}</p>
+    </div>
+    <div class="rounded-lg shadow-lg dark:border dark:border-gray-700 p-8 absolute bottom-8 left-8 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg dark:border dark:border-gray-700 w-full max-w-xl p-10">
+      <h2 class="text-4xl font-semibold text-gray-900 dark:text-white mb-8 text-center">Upload your documents here!</h2>
+      <div
+        class="border-4 border-dashed border-gray-400 p-8 mb-8 bg-gray-100 rounded-lg text-center relative overflow-hidden"
+        @dragover.prevent="dragOver"
+        @dragleave.prevent="dragLeave"
+        @drop.prevent="dropImage"
+        :class="{ 'border-blue-500 border-opacity-50': isDragOver }"
+      >
+        <input
+          id="imageInput"
+          type="file"
+          class="hidden"
+          @change="handleFileSelect"
+        >
+        <label for="imageInput" class="absolute inset-0 flex flex-col justify-center items-center w-full h-full cursor-pointer">
+          <span class="text-lg text-gray-600 dark:text-black mb-4">Drag & Drop your document here</span>
+          <span class="text-blue-500 dark:text-blue-300 font-semibold hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">or Click to Select</span>
+        </label>
+        <img
+          v-if="selectedFile"
+          :src="imageSrc"
+          alt="Selected Image"
+          class="mt-6 max-w-full rounded opacity-75 hover:opacity-100 transition duration-300"
+        />
+      </div>
+      <button
+        @click="uploadImage"
+        :disabled="!selectedFile"
+        class="bg-green-500 text-white py-3 px-8 rounded-lg hover:bg-green-600 transition duration-300 disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed w-full focus:outline-none"
+      >
+        Upload
+      </button>
+      <p v-if="uploadStatus" class="mt-6 text-green-500">{{ uploadStatus }}</p>
+    </div>
+    
+    <div class="rounded-lg shadow-lg dark:border dark:border-gray-700 p-8 absolute bottom-8 right-8 dark:from-gray-800 dark:to-gray-900 rounded-lg shadow-lg dark:border dark:border-gray-700 w-full max-w-xl p-10">
+    <h2 class="text-4xl font-semibold text-gray-900 dark:text-white mb-8 text-center">Upload your videos here!</h2>
+    <div
+      class="border-4 border-dashed border-gray-400 p-8 mb-8 bg-gray-100 rounded-lg text-center relative overflow-hidden"
+      @dragover.prevent="dragOver"
+      @dragleave.prevent="dragLeave"
+      @drop.prevent="dropVideo"
+      :class="{ 'border-blue-500 border-opacity-50': isDragOver }"
+    >
+      <input
+        id="videoInput"
+        type="file" 
+        accept="video/*" 
+        class="hidden"
+        @change="handleVideoSelect" 
+      >
+      <label for="videoInput" class="absolute inset-0 flex flex-col justify-center items-center w-full h-full cursor-pointer">
+        <span class="text-lg text-gray-600 dark:text-black mb-4">Drag & Drop your video here</span>
+        <span class="text-blue-500 dark:text-blue-300 font-semibold hover:text-blue-700 dark:hover:text-blue-400 transition duration-300">or Click to Select</span>
+      </label>
+      <!-- You can display video preview here if needed -->
+    </div>
+    <button
+      @click="uploadVideo"
+      :disabled="!selectedVideo"
+      class="bg-green-500 text-white py-3 px-8 rounded-lg hover:bg-green-600 transition duration-300 disabled:bg-gray-300 disabled:text-black disabled:cursor-not-allowed w-full focus:outline-none"
+    >
+      Upload Video
+    </button>
+    <p v-if="uploadStatus" class="mt-6 text-green-500">{{ uploadStatus }}</p>
+  </div>
+  </div>
+  
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      selectedFile: null,
+      imageSrc: null,
+      isDragOver: true,
+      uploadStatus: null,
+    };
+  },
+  methods: {
+    dragOver() {
+      this.isDragOver = true;
+    },
+    dragLeave() {
+      this.isDragOver = true;
+    },
+    dropImage(event) {
+      this.isDragOver = true;
+      this.handleFileChange(event.dataTransfer.files[0]);
+    },
+    handleFileSelect(event) {
+      this.handleFileChange(event.target.files[0]);
+    },
+    handleFileChange(file) {
+      if (file && file.type.includes('image')) {
+        this.selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageSrc = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid image file.');
+      }
+    },
+    uploadImage() {
+      if (!this.selectedFile) {
+        alert('Please select a file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+
+      axios.post('http://localhost:3000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        this.uploadStatus = 'Upload successful';
+        console.log('Upload successful:', response.data);
+        // Handle success response here
+      })
+      .catch(error => {
+        this.uploadStatus = 'Error uploading image';
+        console.error('Error uploading image:', error.response.data);
+        // Handle error response here
+      });
+    },
+    dragOver() {
+      this.isDragOver = true;
+    },
+    dragLeave() {
+      this.isDragOver = true;
+    },
+    dropImage(event) {
+      this.isDragOver = true;
+      this.handleFileChange(event.dataTransfer.files[0]);
+    },
+    handleFileSelect(event) {
+      this.handleFileChange(event.target.files[0]);
+    },
+    handleFileChange(file) {
+      if (file && file.type.includes('image')) {
+        this.selectedFile = file;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageSrc = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid image file.');
+      }
+    },
+    uploadImage() {
+      if (!this.selectedFile) {
+        alert('Please select a file');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+
+      axios.post('http://localhost:3000/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        this.uploadStatus = 'Upload successful';
+        console.log('Upload successful:', response.data);
+        // Handle success response here
+      })
+      .catch(error => {
+        this.uploadStatus = 'Error uploading image';
+        console.error('Error uploading image:', error.response.data);
+        // Handle error response here
+      });
+    },
+  },
+};
+</script>
+
+<style>
+
+</style>
